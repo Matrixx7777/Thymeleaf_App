@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Setter
 @Getter
@@ -18,4 +19,7 @@ public class Location{
 
     @Column(name = "address")
     public String address;
+
+    @Column(name = "ownersShared")
+    public String ownersShared;
 }

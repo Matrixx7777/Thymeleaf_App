@@ -48,6 +48,15 @@ public class OwnerController {
         return "update_owner";
     }
 
+    @GetMapping("/showLocationSharedWithFormForUpdate/{id}")
+    public String showLocationSharedWithFormForUpdate(@PathVariable ( value = "id") long id, Model model) {
+
+        Owner owner = ownerService.getOwnerById(id);
+
+        model.addAttribute("owner", owner);
+        return "share_location_with";
+    }
+
     @GetMapping("/deleteOwner/{id}")
     public String deleteOwner(@PathVariable (value = "id") long id) {
         this.ownerService.deleteOwnerById(id);

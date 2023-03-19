@@ -44,36 +44,41 @@
 		<table border="1" class = "table table-striped table-responsive-md">
 			<thead>
 				<tr>
-					<th>
+					<th class="text-center">
 						<a th:href="@{'/page/' + ${currentPage} + '?sortField=name&sortDir=' + ${reverseSortDir}}">
 							Owner Full Name</a>
 					</th>
-					<th>
+					<th class="text-center">
 						<a th:href="@{'/page/' + ${currentPage} + '?sortField=email&sortDir=' + ${reverseSortDir}}">
 							Owner Email</a>
 					</th>
-					<th>
+					<th class="text-center">
 						<a th:href="@{'/page/' + ${currentPage} + '?sortField=location_name&sortDir=' + ${reverseSortDir}}">
 							Location Name</a>
 					</th>
-					<th>
+					<th class="text-center">
 						<a th:href="@{'/page/' + ${currentPage} + '?sortField=address&sortDir=' + ${reverseSortDir}}">
 							Address</a>
 					</th>
-					<th> Options </th>
+					<th class="text-center">
+						<a th:href="@{'/page/' + ${currentPage} + '?sortField=ownersShared&sortDir=' + ${reverseSortDir}}">
+							Location Shared With</a>
+					</th>
+					<th class="text-center"> Options </th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr th:each="owner : ${listOwners}">
 
-					<td th:text="${owner.name}"></td>
-					<td th:text="${owner.email}"></td>
-					<td th:text="${owner.location.location_name}"></td>
-					<td th:text="${owner.location.address}"></td>
+					<td class="text-center" th:text="${owner.name}"></td>
+					<td class="text-center" th:text="${owner.email}"></td>
+					<td class="text-center" th:text="${owner.location.location_name}"></td>
+					<td class="text-center" th:text="${owner.location.address}"></td>
+					<td class="text-center" th:text="${owner.location.ownersShared}"></td>
 
-					<td> <a th:href="@{/showOwnerFormForUpdate/{id}(id=${owner.id})}" class="btn btn-primary">Open</a>
+					<td class="text-center"> <a th:href="@{/showOwnerFormForUpdate/{id}(id=${owner.id})}" class="btn btn-primary">Open</a>
 					    <a th:href="@{/deleteOwner/{id}(id=${owner.id})}" class="btn btn-danger">Delete</a>
-						<a th:href="@{/showOwnerFormForUpdate/{id}(id=${owner.id})}" class="btn btn-warning">Share Location With</a>
+						<a th:href="@{/showLocationSharedWithFormForUpdate/{id}(id=${owner.id})}" class="btn btn-warning">Share Location With</a>
 					</td>
 				</tr>
 			</tbody>
