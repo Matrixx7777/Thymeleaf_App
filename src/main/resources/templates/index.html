@@ -23,7 +23,7 @@
 						class="icon-bar"></span> <span class="icon-bar"></span> <span
 						class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="#" th:href="@{/}">Employee Management System</a>
+				<a class="navbar-brand" href="#" th:href="@{/}">Management System</a>
 			</div>
 			<div id="navbar" class="collapse navbar-collapse">
 				<ul class="nav navbar-nav">
@@ -46,7 +46,7 @@
 				<tr>
 					<th>
 						<a th:href="@{'/page/' + ${currentPage} + '?sortField=name&sortDir=' + ${reverseSortDir}}">
-							Owner First Name</a>
+							Owner Full Name</a>
 					</th>
 					<th>
 						<a th:href="@{'/page/' + ${currentPage} + '?sortField=email&sortDir=' + ${reverseSortDir}}">
@@ -71,8 +71,9 @@
 					<td th:text="${owner.location.location_name}"></td>
 					<td th:text="${owner.location.address}"></td>
 
-					<td> <a th:href="@{/showOwnerFormForUpdate/{id}(id=${owner.id})}" class="btn btn-primary">Update</a>
+					<td> <a th:href="@{/showOwnerFormForUpdate/{id}(id=${owner.id})}" class="btn btn-primary">Open</a>
 					    <a th:href="@{/deleteOwner/{id}(id=${owner.id})}" class="btn btn-danger">Delete</a>
+						<a th:href="@{/showOwnerFormForUpdate/{id}(id=${owner.id})}" class="btn btn-warning">Share Location With</a>
 					</td>
 				</tr>
 			</tbody>
