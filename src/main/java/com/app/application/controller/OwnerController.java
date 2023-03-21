@@ -17,7 +17,6 @@ public class OwnerController {
     @Autowired
     private OwnerService ownerService;
 
-    // display list of owners
     @GetMapping("/")
     public String viewHomePage(Model model) {
         return findPaginated(1, "name", "asc", model);
@@ -80,20 +79,15 @@ public class OwnerController {
                                 @RequestParam("sortDir") String sortDir,
                                 Model model) {
         int pageSize = 5;
-
         Page<Owner> page = ownerService.findPaginated(pageNo, pageSize, sortField, sortDir);
         List<Owner> listOwners = page.getContent();
-
         model.addAttribute("currentPage", pageNo);
         model.addAttribute("totalPages", page.getTotalPages());
         model.addAttribute("totalItems", page.getTotalElements());
-
         model.addAttribute("sortField", sortField);
         model.addAttribute("sortDir", sortDir);
         model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
-
         model.addAttribute("listOwners", listOwners);
-
         return "index";
     }
 }
