@@ -2,17 +2,15 @@ package com.app.application.controller;
 
 import java.util.List;
 
+import com.app.application.domain.Location;
 import com.app.application.domain.Owner;
+import com.app.application.repository.LocationRepository;
 import com.app.application.service.OwnerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class OwnerController {
@@ -20,10 +18,31 @@ public class OwnerController {
     @Autowired
     private OwnerService ownerService;
 
+    @Autowired
+    private LocationRepository locationRepository;
+
     // display list of owners
     @GetMapping("/")
     public String viewHomePage(Model model) {
         return findPaginated(1, "name", "asc", model);
+    }
+
+    @GetMapping("/getAllFriendsOnLocation")
+    public List<Owner> getAllFriendsOnLocation(Location location) {
+        List<Owner> getListOfUsersOnLocation = ownerService.getAllOwners();
+        for (int i = 0; i < getListOfUsersOnLocation.size(); i++)
+            if (getListOfUsersOnLocation.get(i).getName().contains(location.getOwnersShared()))
+                return getListOfUsersOnLocation;
+        return getListOfUsersOnLocation;
+    }
+
+    @GetMapping("/getAllLocationsAvailableForUser")
+    public List<Location> getAllLocationsAvailableForUser (Owner owner) {
+        List<Location> getAllLocationsSharedForUser = locationRepository.findAll();
+        for (int i = 0; i < getAllLocationsSharedForUser.size(); i++)
+            if (getAllLocationsSharedForUser.get(i).getOwnersShared().contains(owner.getName()))
+                return getAllLocationsSharedForUser;
+        return getAllLocationsSharedForUser;
     }
 
     @GetMapping("/showNewOwnerForm")
@@ -41,20 +60,9 @@ public class OwnerController {
 
     @GetMapping("/showOwnerFormForUpdate/{id}")
     public String showOwnerFormForUpdate(@PathVariable ( value = "id") long id, Model model) {
-
         Owner owner = ownerService.getOwnerById(id);
-
         model.addAttribute("owner", owner);
         return "update_owner";
-    }
-
-    @GetMapping("/showLocationSharedWithFormForUpdate/{id}")
-    public String showLocationSharedWithFormForUpdate(@PathVariable ( value = "id") long id, Model model) {
-
-        Owner owner = ownerService.getOwnerById(id);
-
-        model.addAttribute("owner", owner);
-        return "share_location_with";
     }
 
     @GetMapping("/deleteOwner/{id}")

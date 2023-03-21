@@ -1,15 +1,13 @@
 package com.app.application.domain;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
-import java.util.Set;
 
 @Setter
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
 @Embeddable
 @Table(name = "locations")
 public class Location{
@@ -22,4 +20,10 @@ public class Location{
 
     @Column(name = "ownersShared")
     public String ownersShared;
+
+    public Location(String location_name, String address) {
+        this.location_name = location_name;
+        this.address = address;
+        this.ownersShared = null;
+    }
 }
