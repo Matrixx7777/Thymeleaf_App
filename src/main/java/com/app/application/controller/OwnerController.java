@@ -2,7 +2,6 @@ package com.app.application.controller;
 
 import java.util.List;
 
-import com.app.application.domain.Location;
 import com.app.application.domain.Owner;
 import com.app.application.service.OwnerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,24 +19,6 @@ public class OwnerController {
     @GetMapping("/")
     public String viewHomePage(Model model) {
         return findPaginated(1, "name", "asc", model);
-    }
-
-    @GetMapping("/getAllFriendsOnLocation")
-    public List<Owner> getAllFriendsOnLocation(Location location) {
-        List<Owner> getListOfUsersOnLocation = ownerService.getAllOwners();
-        for (int i = 0; i < getListOfUsersOnLocation.size(); i++)
-            if (getListOfUsersOnLocation.get(i).getName().contains(location.getOwnersShared()))
-                return getListOfUsersOnLocation;
-        return getListOfUsersOnLocation;
-    }
-
-    @GetMapping("/getAllLocationsAvailableForUser")
-    public List<Owner> getAllLocationsAvailableForUser (Owner owner) {
-        List<Owner> getAllLocationsSharedForUser = ownerService.getAllOwners();
-        for (int i = 0; i < getAllLocationsSharedForUser.size(); i++)
-            if (getAllLocationsSharedForUser.get(i).getLocation().getOwnersShared().contains(owner.getName()))
-                return getAllLocationsSharedForUser;
-        return getAllLocationsSharedForUser;
     }
 
     @GetMapping("/showNewOwnerForm")
